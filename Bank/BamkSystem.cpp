@@ -107,21 +107,21 @@ public:
     }
 
     // Getters
-    string Get_Name()
+    string Get_Name() const
     {
         return this->name;
     }
-    int Get_Id()
+    int Get_Id() const
     {
         return this->id;
     }
-    string Get_Password()
+    string Get_Password() const
     {
         return this->password;
     }
 
     // methods
-    void display()
+    void display() const
     {
         cout << "Name: " << Get_Name() << endl;
         cout << "ID: " << Get_Id() << endl;
@@ -131,6 +131,54 @@ public:
     // destructor
     ~Person()
     {
+    }
+};
+
+class Employee : public Person
+{
+
+protected:
+    double salary;
+
+public:
+    // 1. Constructors
+    Employee() : Person()
+    {
+        this->salary = 0;
+    }
+
+    Employee(const string &name, int id, const string &password, double salary) : Person(name, id, password)
+    {
+        setSalary(salary);
+    }
+
+    // 2. Setter with Validation
+    void setSalary(double salary)
+    {
+        if (Validation::salary(salary))
+        {
+            this->salary = salary;
+        }
+        else
+        {
+            cout << "Invalid Salary! Minimum salary is 5000." << endl;
+            this->salary = 0;
+        }
+    }
+
+    // 3. Getter
+    double getSalary() const
+    {
+        return this->salary;
+    }
+
+    // 4. Methods
+    void display() const
+    {
+
+        Person::display();
+        cout << "Salary: " << this->salary << endl;
+        cout << "----------------------" << endl;
     }
 };
 
