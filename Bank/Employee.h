@@ -3,6 +3,7 @@
 #include <string>
 #include "Validation.h"
 #include "Person.h"
+#include "Client.h"
 using namespace std;
 
 class Employee : public Person
