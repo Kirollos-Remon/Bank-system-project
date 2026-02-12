@@ -21,6 +21,9 @@ public:
     {
         setBalance(balance);
     }
+    Client( int id, string password) 
+    {
+    }
 
     void setBalance(double balance)
     {

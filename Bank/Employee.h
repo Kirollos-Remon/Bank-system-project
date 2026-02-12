@@ -21,11 +21,15 @@ public:
 
     Employee(const string &name, int id, const string &password, double salary) : Person(name, id, password)
     {
-        setSalary(salary);
+        Set_Salary(salary);
+    }
+    Employee( int id, const string &password) 
+    {
+        
     }
 
     // 2. Setter with Validation
-    void setSalary(double salary)
+    void Set_Salary(double salary)
     {
         if (Validation::salary(salary))
         {

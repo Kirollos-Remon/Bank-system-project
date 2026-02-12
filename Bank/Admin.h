@@ -1,43 +1,17 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
 
 using namespace std;
 
-class Employee
-{
-protected:
-    string name;
-    int id;
-    string password;
-    double salary;
-
-public:
-    Employee(string n, int i, string p, double s)
-        : name(n), id(i), password(p), salary(s) {}
-
-    // Getters
-    int Get_Id() const { return id; }
-    string Get_Name() const { return name; }
-
-    // Setters
-    void SetName(string n) { name = n; }
-    void SetPassword(string p) { password = p; }
-    void SetSalary(double s) { salary = s; }
-
-    void display() const
-    {
-        cout << "ID: " << id << " | Name: " << name
-             << " | Salary: " << salary << " EGP" << endl;
-    }
-};
-
 class Admin : public Employee
 {
 public:
     Admin(string name, int id, string password, double salary)
         : Employee(name, id, password, salary) {}
-
+    Admin(int id , string paswword)
+        : Employee("Admin", id, paswword, 0) {}
     void searchEmployee(const vector<Employee> &Employees, int EmployeeID) const
     {
         for (const auto &emp : Employees)
@@ -87,9 +61,9 @@ public:
                 cout << "New salary: ";
                 cin >> newSalary;
 
-                emp.SetName(newName);
-                emp.SetPassword(newPass);
-                emp.SetSalary(newSalary);
+                emp.Set_Name(newName);
+                emp.Set_Password(newPass);
+                emp.Set_Salary(newSalary);
                 cout << "[!] Updated successfully!\n";
                 return;
             }
@@ -124,45 +98,3 @@ public:
     }
 };
 
-int main()
-{
-    Admin myAdmin("Ahmed", 1, "admin123", 15000);
-    vector<Employee> db; // قاعدة بيانات الموظفين
-
-    int choice;
-    do
-    {
-        cout << "\n--- Admin Menu ---\n";
-        cout << "1. Add Employee\n2. View All\n3. Search\n4. Edit\n5. Delete\n0. Exit\n";
-        cout << "Choice: ";
-        cin >> choice;
-
-        int id;
-        switch (choice)
-        {
-        case 1:
-            myAdmin.addEmployee(db);
-            break;
-        case 2:
-            myAdmin.viewAllEmployees(db);
-            break;
-        case 3:
-            cout << "Enter ID to search: ";
-            cin >> id;
-            myAdmin.searchEmployee(db, id);
-            break;
-        case 4:
-            cout << "Enter ID to edit: ";
-            cin >> id;
-            myAdmin.editEmployee(db, id);
-            break;
-        case 5:
-            cout << "Enter ID to delete: ";
-            cin >> id;
-            myAdmin.deleteEmployee(db, id);
-            break;
-        }
-    } while (choice != 0);
-
-    return 0;
-}
