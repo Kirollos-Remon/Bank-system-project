@@ -8,7 +8,7 @@
 
 int main()
 {
-    Admin admin1("Mahmoud Abdo", 101, "adminPass123", 6000);
+    Admin admin1("Mahmoud Abdo", 101, "87654321", 6000);
     admin1.display();
     system("pause");
     system("cls");  
@@ -20,13 +20,13 @@ int main()
     system("cls");
 
 
-    Client client1(301, "Ganna Ayman", "clientPass456", 2000);
+    Client client1(301, "Ganna Ayman", "43215678", 200000);
     client1.display();
     client1.deposit(500);
     system("pause");
     system("cls");
 
-    Client client2(301, "Ahmed Mohamed", "clientPass123", 2000);
+    Client client2(301, "Ahmed Mohamed", "12332145", 30000);
     client2.display();
     client2.deposit(500);
     client2.transferTo(300,client1);
