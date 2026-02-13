@@ -21,13 +21,13 @@ public:
     {
         id = 0;
     }
-    Person(const string &name, int id, const string &password)
+    Person( string name, int id, string password)
     {
         Set_Person(name, id, password);
     }
 
     // Setters
-    void Set_Name(const string &name)
+    void Set_Name(string name)
     {
         if (Validation::Name(name))
             this->name = name;
@@ -43,7 +43,7 @@ public:
             cout << "Invalid ID" << endl;
     }
 
-    void Set_Password(const string &password)
+    void Set_Password(string password)
     {
         if (Validation::password(password))
             this->password = password;
@@ -51,7 +51,7 @@ public:
             cout << "Invalid Password" << endl;
     }
 
-    void Set_Person(const string &name, int id, const string &password)
+    void Set_Person(string name, int id,string password)
     {
         Set_Name(name);
         Set_Id(id);

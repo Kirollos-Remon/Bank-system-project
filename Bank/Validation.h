@@ -1,10 +1,9 @@
-//Devoloper: Kirollos Remon//
+// Devoloper: Kirollos Remon//
 
 #pragma once
 #include <iostream>
 #include <string>
 using namespace std;
-
 
 class Validation
 {
@@ -13,7 +12,7 @@ public:
     static bool Name(const string &name)
     {
 
-        if (name.length() < 5 || name.length() > 20)
+        if (name.length() < 3 || name.length() > 20)
             return false;
 
         for (int i = 0; i < name.length(); i++)
