@@ -20,7 +20,7 @@ public:
     }
 
     Client(int id, string name, string password, double balance)
-        : Person(name, id, password) اً
+        : Person(name, id, password) 
     {
         setBalance(balance);
     }

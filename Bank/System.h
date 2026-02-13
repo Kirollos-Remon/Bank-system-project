@@ -49,21 +49,21 @@ public:
             case 1:
                 if (clientLogin())
                 {
-                    Client c(30, "123321456");
+                    Client c(30,"ganna ayman", "123321456",9876);
                     clientOptions(c);
                 };
                 break;
             case 2:
                 if (employeeLogin())
                 {
-                    Employee e(20, "John Doe", "87654321", 6000);
+                    Employee e(20, "Mohamed amr", "87654321", 6000);
                     employeeOptions(e);
                 }
                 break;
             case 3:
                 if (adminLogin())
                 {
-                    Admin a(10, "Kirollos Remon", "12345678", 50000);
+                    Admin a(10, "Mahmoud abdo", "12345678", 50000);
                     adminOptions(a);
                 }
                 break;
