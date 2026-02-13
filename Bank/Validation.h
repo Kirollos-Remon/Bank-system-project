@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+//Validation class
+
 class Validation
 {
 public:

@@ -4,6 +4,8 @@
 #include "Validation.h"
 using namespace std;
 
+// Person class
+
 class Person
 {
 protected:

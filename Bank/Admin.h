@@ -1,100 +1,92 @@
 #pragma once
-#include <iostream>
+#include "Employee.h"
 #include <vector>
-#include <string>
-
-using namespace std;
+#include <iomanip> 
 
 class Admin : public Employee
 {
 public:
-    Admin(string name, int id, string password, double salary)
-        : Employee(name, id, password, salary) {}
-    Admin(int id , string paswword)
-        : Employee("Admin", id, paswword, 0) {}
-    void searchEmployee(const vector<Employee> &Employees, int EmployeeID) const
+    Admin(int id, string name, string password, double salary)
+        : Employee(id, name, password, salary) {}
+
+    Admin(int id, string password)
+        : Employee(id, "", password, 0)
     {
-        for (const auto &emp : Employees)
-        {
-            if (emp.Get_Id() == EmployeeID)
-            {
-                cout << "\n[+] Employee Found:\n";
-                emp.display();
-                return;
-            }
-        }
-        cout << "\n[-] Error: Employee ID " << EmployeeID << " not found.\n";
     }
 
-    void addEmployee(vector<Employee> &Employees)
+    void addEmployee(vector<Employee> &employees)
     {
         string name, password;
         int id;
         double salary;
-        cout << "\n--- Adding New Employee ---\n";
-        cout << "Enter name: ";
-        cin >> name;
-        cout << "Enter ID: ";
+
+        cout << "\n[New Employee Entry]\n";
+        cout << "Name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "ID: ";
         cin >> id;
-        cout << "Enter password: ";
+        cout << "Password: ";
         cin >> password;
-        cout << "Enter salary: ";
+        cout << "Salary: ";
         cin >> salary;
 
-        Employees.push_back(Employee(name, id, password, salary));
-        cout << "[+] Employee added successfully!\n";
-    }
-
-    void editEmployee(vector<Employee> &Employees, int EmployeeID)
-    {
-        for (auto &emp : Employees)
+        if (Validation::Name(name) && Validation::password(password) &&
+            Validation::salary(salary) && Validation::id(id))
         {
-            if (emp.Get_Id() == EmployeeID)
-            {
-                string newName, newPass;
-                double newSalary;
-                cout << "\n--- Editing ID: " << EmployeeID << " ---\n";
-                cout << "New name: ";
-                cin >> newName;
-                cout << "New password: ";
-                cin >> newPass;
-                cout << "New salary: ";
-                cin >> newSalary;
 
-                emp.Set_Name(newName);
-                emp.Set_Password(newPass);
-                emp.Set_Salary(newSalary);
-                cout << "[!] Updated successfully!\n";
-                return;
-            }
+            employees.emplace_back(id, name, password, salary);
+            cout << "\n>>> Success: Employee [" << name << "] added.\n";
         }
-        cout << "[-] Error: Employee not found!\n";
-    }
-
-    void deleteEmployee(vector<Employee> &Employees, int EmployeeID)
-    {
-        for (size_t i = 0; i < Employees.size(); i++)
+        else
         {
-            if (Employees[i].Get_Id() == EmployeeID)
-            {
-                Employees.erase(Employees.begin() + i);
-                cout << "[!] Employee deleted successfully!\n";
-                return;
-            }
+            cout << "\n>>> Error: Invalid data! Please check requirements.\n";
         }
-        cout << "[-] Error: Not found!\n";
     }
 
-    void viewAllEmployees(const vector<Employee> &Employees) const
+    void viewAllEmployees(const vector<Employee> &employees) const
     {
-        if (Employees.empty())
+        if (employees.empty())
         {
-            cout << "\n[!] No employees in the system.\n";
+            cout << "\n[!] Database is empty.\n";
             return;
         }
-        cout << "\n--- Current Employee List ---\n";
-        for (const auto &emp : Employees)
-            emp.display();
+
+        cout << "\n"
+            << string(50, '=') << "\n";
+        cout << left << setw(10) << "ID" << setw(20) << "Name" << setw(15) << "Salary" << endl;
+        cout << string(50, '-') << "\n";
+
+        for (const auto &emp : employees)
+        {
+            cout << left << setw(10) << emp.Get_Id()
+                << setw(20) << emp.Get_Name()
+                << setw(15) << emp.getSalary() << endl;
+        }
+        cout << string(50, '=') << endl;
+    }
+
+    Employee *findEmployee(vector<Employee> &employees, int id)
+    {
+        for (auto &emp : employees)
+        {
+            if (emp.Get_Id() == id)
+                return &emp;
+        }
+        return nullptr;
+    }
+
+    void deleteEmployee(vector<Employee> &employees, int id)
+    {
+        for (auto it = employees.begin(); it != employees.end(); ++it)
+        {
+            if (it->Get_Id() == id)
+            {
+                employees.erase(it);
+                cout << "\n>>> Success: Employee with ID " << id << " removed.\n";
+                return;
+            }
+        }
+        cout << "\n>>> Error: ID not found.\n";
     }
 };
-

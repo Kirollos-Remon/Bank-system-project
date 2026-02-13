@@ -6,6 +6,8 @@
 #include "Employee.h"
 using namespace std;
 
+// Client class
+
 class Client : public Person
 {
 private:
@@ -17,11 +19,12 @@ public:
         this->balance = 0;
     }
 
-    Client(string name, int id, string password, double balance) : Person(name, id, password)
+    Client(int id, string name, string password, double balance)
+        : Person(name, id, password) اً
     {
         setBalance(balance);
     }
-    Client( int id, string password) 
+    Client(int id, string password)
     {
     }
 
