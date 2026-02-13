@@ -26,7 +26,7 @@ int main()
     system("pause");
     system("cls");
 
-    Client client2(301, "Charlie Brown", "clientPass123", 2000);
+    Client client2(301, "Ahmed Mohamed", "clientPass123", 2000);
     client2.display();
     client2.deposit(500);
     client2.transferTo(300,client1);
