@@ -1,4 +1,4 @@
-                                       //Devoloper: Mahmoud Abdo//
+                                        //Devoloper: Mahmoud Abdo//
 
 #pragma once
 #include <iostream>
