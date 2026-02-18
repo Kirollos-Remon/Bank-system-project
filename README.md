@@ -1,4 +1,4 @@
-# Bank Management System - Phase 01
+# Bank Management System
 
 ## 👥 Team Members
 * **Kirollos Remon** (Team Leader)
