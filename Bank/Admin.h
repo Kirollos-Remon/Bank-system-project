@@ -21,9 +21,9 @@ public:
 
     void addEmployee(Employee &e)
     {
-        int lastId = FilesHelper::getLast("EmployeeLastId.txt");
+        int lastId = FilesHelper::getLast("LastEmpId.txt");
         e.Set_Id(lastId + 1);
-        FilesHelper::saveEmployee("Employees.txt", "EmployeeLastId.txt", e);
+        FilesHelper::saveEmployee("Employees.txt", "LastEmpId.txt", e);
         cout << "Employee added with ID: " << e.Get_Id() << endl;
     }
 
@@ -52,14 +52,14 @@ public:
                 employees[i].Set_Password(password);
                 employees[i].setSalary(salary);
 
-                FilesHelper::clearFile("Employees.txt", "EmployeeLastId.txt");
+                FilesHelper::clearFile("Employees.txt", "LastEmpId.txt");
                 int lastId = 0;
                 for (auto &e : employees)
                 {
-                    FilesHelper::saveEmployee("Employees.txt", "EmployeeLastId.txt", e);
+                    FilesHelper::saveEmployee("Employees.txt", "LastEmpId.txt", e);
                     lastId = e.Get_Id();
                 }
-                FilesHelper::saveLast("EmployeeLastId.txt", lastId);
+                FilesHelper::saveLast("LastEmpId.txt", lastId);
 
                 found = true;
                 cout << "Employee ID " << id << " updated successfully." << endl;

@@ -58,14 +58,14 @@ public:
                 break;
             }
         }
-        FilesHelper::clearFile("Clients.txt", "ClientLastId.txt");
+        FilesHelper::clearFile("Clients.txt", "LastClientId.txt");
         int lastId = 0;
         for (auto &c : allClients)
         {
             FilesHelper::saveClient(c);
             lastId = c.Get_Id();
         }
-        FilesHelper::saveLast("ClientLastId.txt", lastId);
+        FilesHelper::saveLast("LastClientId.txt", lastId);
     }
 
     void deposit(double amount)

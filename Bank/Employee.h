@@ -47,10 +47,10 @@ public:
 
     void addClient(Client &client)
     {
-        int lastId = FilesHelper::getLast("ClientLastId.txt");
+        int lastId = FilesHelper::getLast("LastEmpId.txt");
         client.Set_Id(lastId + 1);
         FilesHelper::saveClient(client);
-        FilesHelper::saveLast("ClientLastId.txt", client.Get_Id());
+        FilesHelper::saveLast("LastEmpId.txt", client.Get_Id());
         cout << "Client added with ID: " << client.Get_Id() << endl;
     }
 
@@ -93,14 +93,14 @@ public:
                 clients[i].Set_Password(password);
                 clients[i].setBalance(balance);
 
-                FilesHelper::clearFile("Clients.txt", "ClientLastId.txt");
+                FilesHelper::clearFile("Clients.txt", "LastEmpId.txt");
                 int lastId = 0;
                 for (auto &c : clients)
                 {
                     FilesHelper::saveClient(c);
                     lastId = c.Get_Id();
                 }
-                FilesHelper::saveLast("ClientLastId.txt", lastId);
+                FilesHelper::saveLast("LastEmpId.txt", lastId);
 
                 found = true;
                 cout << "Client ID " << id << " updated successfully." << endl;
