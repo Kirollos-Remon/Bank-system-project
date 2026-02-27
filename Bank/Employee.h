@@ -5,6 +5,8 @@
 #include "Person.h"
 #include "Validation.h"
 #include "Client.h"
+#include "FilesHelper.h"
+#include "FileManager.h"
 
 using namespace std;
 
@@ -15,7 +17,6 @@ private:
     vector<Client> clients;
 
 public:
-    // Constructors
     Employee() : Person()
     {
         this->salary = 0;
@@ -26,7 +27,6 @@ public:
         setSalary(salary);
     }
 
-    // Setters
     void setSalary(double salary)
     {
         if (Validation::salary(salary))
@@ -40,22 +40,23 @@ public:
         }
     }
 
-    // Getters
     double getSalary()
     {
         return salary;
     }
 
-    // Methods
-
     void addClient(Client &client)
     {
-        clients.push_back(client);
-        cout << "Client added successfully." << endl;
+        int lastId = FilesHelper::getLast("ClientLastId.txt");
+        client.Set_Id(lastId + 1);
+        FilesHelper::saveClient(client);
+        FilesHelper::saveLast("ClientLastId.txt", client.Get_Id());
+        cout << "Client added with ID: " << client.Get_Id() << endl;
     }
 
     Client *searchClient(int id)
     {
+        clients = FilesHelper::getAllClients();
         for (int i = 0; i < clients.size(); i++)
         {
             if (clients[i].Get_Id() == id)
@@ -68,6 +69,7 @@ public:
 
     void listClient()
     {
+        clients = FilesHelper::getAllClients();
         cout << "--- Listing All Clients Managed by " << Get_Name() << " ---" << endl;
         if (clients.empty())
         {
@@ -81,25 +83,38 @@ public:
 
     void editClient(int id, string name, string password, double balance)
     {
-        Client *client = searchClient(id);
-        if (client != nullptr)
+        clients = FilesHelper::getAllClients();
+        bool found = false;
+        for (int i = 0; i < clients.size(); i++)
         {
-            client->Set_Name(name);
-            client->Set_Password(password);
-            client->setBalance(balance);
-            cout << "Client ID " << id << " updated successfully." << endl;
+            if (clients[i].Get_Id() == id)
+            {
+                clients[i].Set_Name(name);
+                clients[i].Set_Password(password);
+                clients[i].setBalance(balance);
+
+                FilesHelper::clearFile("Clients.txt", "ClientLastId.txt");
+                int lastId = 0;
+                for (auto &c : clients)
+                {
+                    FilesHelper::saveClient(c);
+                    lastId = c.Get_Id();
+                }
+                FilesHelper::saveLast("ClientLastId.txt", lastId);
+
+                found = true;
+                cout << "Client ID " << id << " updated successfully." << endl;
+                break;
+            }
         }
-        else
-        {
+        if (!found)
             cout << "Client with ID " << id << " not found." << endl;
-        }
     }
 
     void display()
     {
         Person::display();
         cout << "Salary: " << salary << endl;
-        cout << "Clients Managed: " << clients.size() << endl;
         cout << "-----------------------" << endl
              << endl;
     }

@@ -1,54 +1,58 @@
 #pragma once
-#include <fstream>
-#include <string>
-#include <vector>
-#include "Parser.h"
+#include "DataSourceInterface.h"
+#include "FilesHelper.h"
 
-class FileManager
+class FileManager : public DataSourceInterface
 {
 public:
-    static void addClient(Client &c)
+    void addClient(Client c) 
     {
-        ofstream file("Clients.txt", ios::app); 
-        if (file.is_open())
-        {
-            file << c.Get_Id() << "|" << c.Get_Name() << "|" << c.Get_Password() << "|" << c.getBalance() << endl;
-            file.close();
-        }
+        FilesHelper::saveClient(c);
     }
 
-    static void addEmployee(Employee &e)
+    void addEmployee(Employee e) 
     {
-        ofstream file("Employees.txt", ios::app);
-        if (file.is_open())
-        {
-            file << e.Get_Id() << "|" << e.Get_Name() << "|" << e.Get_Password() << "|" << e.getSalary() << endl;
-            file.close();
-        }
+        FilesHelper::saveEmployee("Employees.txt", "LastIds.txt", e);
     }
 
-    static vector<Client> getAllClients()
+    void addAdmin(Admin a) 
     {
-        vector<Client> clients;
-        ifstream file("Clients.txt");
-        string line;
-        if (file.is_open())
-        {
-            while (getline(file, line))
-            {
-                if (!line.empty())
-                {
-                    clients.push_back(Parser::parseClients(line));
-                }
-            }
-            file.close();
-        }
-        return clients;
+        FilesHelper::saveEmployee("Admins.txt", "LastIds.txt", a);
     }
 
-    static void removeAllClients()
+    void displayClients() 
     {
-        ofstream file("Clients.txt", ios::trunc);
-        file.close();
+        vector<Client> all = FilesHelper::getAllClients();
+        for (auto &c : all)
+            c.display();
+    }
+
+    void displayEmployees() 
+    {
+        vector<Employee> all = FilesHelper::getAllEmployees();
+        for (auto &e : all)
+            e.display();
+    }
+
+    void displayAdmins() 
+    {
+        vector<Admin> all = FilesHelper::getAllAdmins();
+        for (auto &a : all)
+            a.display();
+    }
+
+    void AllClient() 
+    {
+        vector<Client> clients = FilesHelper::getAllClients();
+    }
+
+    void AllEmployee() 
+    {
+        vector<Employee> emps = FilesHelper::getAllEmployees();
+    }
+
+    void AllAdmin() 
+    {
+        vector<Admin> admins = FilesHelper::getAllAdmins();
     }
 };

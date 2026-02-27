@@ -1,13 +1,14 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 #include <sstream>
-#include "Client.h"
-#include "Employee.h"
-#include "Admin.h"
 
 using namespace std;
+
+class Client;
+class Employee;
+class Admin;
 
 class Parser
 {
@@ -49,16 +50,17 @@ class Parser
             return employee;
         }
 
-        static Admin parseAdmins(string line) {
-            Admin admin;
-            vector<string> parts = SplitLine(line);
-            if (parts.size() == 4) {
+        static Admin parseAdmins(string line)
+        {
+            vector<string> parts = Parser::SplitLine(line);
+            if (parts.size() == 4)
+            {
                 int id = stoi(parts[0]);
                 string name = parts[1];
                 string password = parts[2];
                 double salary = stod(parts[3]);
-                admin = Admin(name, id, password, salary);
+                return Admin(name, id, password, salary);
             }
-            return admin;
+            return Admin();
         }
 };

@@ -1,32 +1,35 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Employee.h"
 #include <vector>
-#include "Client.h"
+#include "Employee.h"
+#include "parser.h"
+
 using namespace std;
+
+class FilesHelper;
 
 class Admin : public Employee
 {
-    private:
+private:
     vector<Employee> employees;
-public:
-    // Constructors
-    Admin() : Employee() {}
 
+public:
+    Admin() : Employee() {}
     Admin(string name, int id, string password, double salary)
         : Employee(name, id, password, salary) {}
 
-    // Methods
-
-    void addEmployee(Employee &employee)
+    void addEmployee(Employee &e)
     {
-        employees.push_back(employee);
-        cout << "Employee added successfully." << endl;
+        int lastId = FilesHelper::getLast("EmployeeLastId.txt");
+        e.Set_Id(lastId + 1);
+        FilesHelper::saveEmployee("Employees.txt", "EmployeeLastId.txt", e);
+        cout << "Employee added with ID: " << e.Get_Id() << endl;
     }
 
     Employee *searchEmployee(int id)
     {
+        employees = FilesHelper::getAllEmployees();
         for (int i = 0; i < employees.size(); i++)
         {
             if (employees[i].Get_Id() == id)
@@ -39,32 +42,44 @@ public:
 
     void editEmployee(int id, string name, string password, double salary)
     {
-        Employee *emp = searchEmployee(id);
-        if (emp != nullptr)
+        employees = FilesHelper::getAllEmployees();
+        bool found = false;
+        for (int i = 0; i < employees.size(); i++)
         {
-            emp->Set_Name(name);
-            emp->Set_Password(password);
-            emp->setSalary(salary);
-            cout << "Employee ID " << id << " updated successfully." << endl;
+            if (employees[i].Get_Id() == id)
+            {
+                employees[i].Set_Name(name);
+                employees[i].Set_Password(password);
+                employees[i].setSalary(salary);
+
+                FilesHelper::clearFile("Employees.txt", "EmployeeLastId.txt");
+                int lastId = 0;
+                for (auto &e : employees)
+                {
+                    FilesHelper::saveEmployee("Employees.txt", "EmployeeLastId.txt", e);
+                    lastId = e.Get_Id();
+                }
+                FilesHelper::saveLast("EmployeeLastId.txt", lastId);
+
+                found = true;
+                cout << "Employee ID " << id << " updated successfully." << endl;
+                break;
+            }
         }
-        else
-        {
-            cout << "Employee with ID " << id << " not found." << endl;
-        }
+        if (!found)
+            cout << "Employee not found." << endl;
     }
 
     void listEmployee()
     {
+        employees = FilesHelper::getAllEmployees();
         cout << "--- Listing All Employees ---" << endl;
         if (employees.empty())
-        {
-            cout << "No employees found in the system." << endl;
-        }
+            cout << "No employees found." << endl;
         for (auto &emp : employees)
-        {
             emp.display();
-        }
     }
+
     void display()
     {
         cout << "--- Admin Data ---" << endl;
@@ -72,4 +87,6 @@ public:
         cout << "-----------------------" << endl
              << endl;
     }
+
+   
 };
