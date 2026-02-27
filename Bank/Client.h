@@ -1,5 +1,3 @@
-                                    //Devoloper: Ganna Ayman//
-
 #pragma once
 #include <iostream>
 #include <string>
@@ -7,8 +5,6 @@
 #include "Person.h"
 #include "Employee.h"
 using namespace std;
-
-// Client class
 
 class Client : public Person
 {
