@@ -1,12 +1,7 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include "Person.h"
-#include "Validation.h"
 #include "Client.h"
-#include "FilesHelper.h"
-#include "FileManager.h"
+#include <vector>
+#include <iterator>
 
 using namespace std;
 

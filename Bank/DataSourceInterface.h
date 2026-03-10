@@ -1,7 +1,4 @@
-#include<iostream>
-#include<string>
-#include "Client.h"
-#include "Employee.h"
+#pragma once
 #include "Admin.h"
 using namespace std;
 

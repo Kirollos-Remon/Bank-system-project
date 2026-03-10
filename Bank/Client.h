@@ -1,11 +1,8 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include "Validation.h"
 #include "Person.h"
+#include <vector>
+#include <iterator>
 #include "FilesHelper.h"
-#include "FileManager.h"
 
 using namespace std;
 
