@@ -1,10 +1,12 @@
 #pragma once
 #include "Person.h"
 #include <vector>
-#include <iterator>
-#include "FilesHelper.h"
+#include <string>
+#include <iostream>
 
 using namespace std;
+
+class FilesHelper;
 
 class Client : public Person
 {
@@ -42,28 +44,7 @@ public:
         return this->balance;
     }
 
-    void updateInFile()
-    {
-        vector<Client> allClients = FilesHelper::getAllClients();
-        for (int i = 0; i < allClients.size(); i++)
-        {
-            if (allClients[i].Get_Id() == this->Get_Id())
-            {
-                allClients[i].balance = this->balance;
-                allClients[i].Set_Name(this->Get_Name());
-                allClients[i].Set_Password(this->Get_Password());
-                break;
-            }
-        }
-        FilesHelper::clearFile("Clients.txt", "LastClientId.txt");
-        int lastId = 0;
-        for (auto &c : allClients)
-        {
-            FilesHelper::saveClient(c);
-            lastId = c.Get_Id();
-        }
-        FilesHelper::saveLast("LastClientId.txt", lastId);
-    }
+    void updateInFile();
 
     void deposit(double amount)
     {
@@ -130,3 +111,28 @@ public:
              << endl;
     }
 };
+
+#include "FilesHelper.h"
+
+inline void Client::updateInFile()
+{
+    vector<Client> allClients = FilesHelper::getAllClients();
+    for (int i = 0; i < allClients.size(); i++)
+    {
+        if (allClients[i].Get_Id() == this->Get_Id())
+        {
+            allClients[i].balance = this->balance;
+            allClients[i].Set_Name(this->Get_Name());
+            allClients[i].Set_Password(this->Get_Password());
+            break;
+        }
+    }
+    FilesHelper::clearFile("Clients.txt", "LastClientId.txt");
+    int lastId = 0;
+    for (auto &c : allClients)
+    {
+        FilesHelper::saveClient(c);
+        lastId = c.Get_Id();
+    }
+    FilesHelper::saveLast("LastClientId.txt", lastId);
+}
