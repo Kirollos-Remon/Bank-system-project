@@ -37,6 +37,16 @@ public:
         }
     }
 
+    static void saveAllClients(vector<Client> clients)
+    {
+        ofstream file("Clients.txt", ios::trunc);
+        for (int i = 0; i < clients.size(); i++)
+        {
+            file << clients[i].Get_Id() << "|" << clients[i].Get_Name() << "|" << clients[i].Get_Password() << "|" << clients[i].getBalance() << endl;
+        }
+        file.close();
+    }
+
     static void saveEmployee(string fileName, string lastIdFile, Employee e)
     {
         ofstream file(fileName, ios::app);
