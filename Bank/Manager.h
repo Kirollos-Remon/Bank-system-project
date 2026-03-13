@@ -144,8 +144,39 @@ class clientMamager
                 system("pause");
                 break;
             case 5:
+            {
+                int recipientId;
+                double amount;
+
+                cout << "Enter Recipient ID: ";
+                cin >> recipientId;
+                cout << "Enter Amount to Transfer: ";
+                cin >> amount;
+
+                vector<Client> allClients = FilesHelper::getAllClients();
+                Client *recipient = nullptr;
+
+                for (int i = 0; i < allClients.size(); i++)
+                {
+                    if (allClients[i].Get_Id() == recipientId)
+                    {
+                        recipient = &allClients[i];
+                        break;
+                    }
+                }
+
+                if (recipient != nullptr)
+                {
+                    client->transferTo(amount, *recipient);
+                }
+                else
+                {
+                    cout << "\n [!] Error: Recipient ID not found." << endl;
+                }
+
                 system("pause");
                 break;
+            }
             case 6:
                 updatePassword(client);
                 system("pause");
