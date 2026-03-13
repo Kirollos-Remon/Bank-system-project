@@ -4,6 +4,7 @@
 #include <iterator>
 
 using namespace std;
+class FilesHelper;
 
 class Employee : public Person
 {

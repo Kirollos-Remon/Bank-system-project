@@ -72,7 +72,7 @@ public:
     }
 
     // methods
-    void display() const
+    virtual void display() const
     {
         cout << "Name: " << Get_Name() << endl;
         cout << "ID: " << Get_Id() << endl;
@@ -80,7 +80,7 @@ public:
     }
 
     // destructor
-    ~Person()
+    virtual ~Person()
     {
     }
 };
